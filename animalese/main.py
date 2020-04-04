@@ -1,7 +1,7 @@
 from pydub import AudioSegment
 from pydub.playback import play
 
-from animalese.lib.soundcharacter import getSC
+from animalese.lib.speech import getSC, calclength
 
 
 # def add_character(soundfile, n, newchar, offset):
@@ -12,22 +12,11 @@ from animalese.lib.soundcharacter import getSC
 #         soundfile = soundfile.overlay(AudioSegment.empty(), position = n * (offset * SPACE_WIDTH))
 
 
-def calclength(text):
-    maxending = 0
-    offset = 0
-    for c in text:
-        sc = getSC(c)
-        ending = offset + len(sc)
-        maxending = max(ending, maxending)
-        offset += sc.offset
-    return maxending
-
-
-def to_animalese(text):
-    outlength = calclength(text)
+def to_animalese(s):
+    outlength = calclength(s)
     outsound = AudioSegment.silent(duration = outlength)
     offset = 0
-    for c in text:
+    for c in s:
         sc = getSC(c)
         outsound = outsound.overlay(sc.sound, position = offset)
         offset += sc.offset
