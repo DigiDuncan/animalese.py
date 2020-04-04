@@ -11,6 +11,9 @@ class SoundCharacter:
         self.sound = sound
         self.offset = offset
 
+    def __len__(self):
+        return len(self.sound)
+
 
 ENGLISH = {
     " ": SoundCharacter(" ", AudioSegment.empty(), offset = 250),
