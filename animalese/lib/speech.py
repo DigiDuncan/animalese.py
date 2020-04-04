@@ -1,11 +1,12 @@
+from functools import lru_cache
 import importlib.resources as pkg_resources
 
 from pydub import AudioSegment
+from pydub.playback import play
 
 from animalese.data.audio import english
 
 DEFAULT_OFFSET = 80
-SPACE_OFFSET = 100
 
 
 class SpeechCharacter:
@@ -20,11 +21,41 @@ class SpeechCharacter:
 
 class SpeechString:
     def __init__(self, s):
+        self.s = s
         self.scs = [getSC(c) for c in s]
+
+    @property
+    @lru_cache()
+    def audio(self):
+        outlength = len(self)
+        outsound = AudioSegment.silent(duration = outlength)
+        offset = 0
+        for sc in self.scs:
+            outsound = outsound.overlay(sc.sound, position = offset)
+            offset += sc.offset
+        return outsound
+
+    def play(self):
+        play(self.audio)
+
+    def save(self, path, **kwargs):
+        if "format" not in kwargs:
+            kwargs["format"] = "wav"
+        self.audio.export(path, **kwargs)
+
+    @lru_cache()
+    def __len__(self):
+        maxending = 0
+        offset = 0
+        for sc in self.scs:
+            ending = offset + len(sc)
+            maxending = max(ending, maxending)
+            offset += sc.offset
+        return maxending
 
 
 ENGLISH = {
-    " ": SpeechCharacter(" ", AudioSegment.empty(), offset = SPACE_OFFSET),
+    " ": SpeechCharacter(" ", AudioSegment.empty()),
     "missingno": SpeechCharacter("missingno", AudioSegment.empty())
 }
 
