@@ -1,3 +1,4 @@
 colored==1.4.2
 digiformatter==0.5.2
 pydub==0.23.1
+simpleaudio==1.0.4
