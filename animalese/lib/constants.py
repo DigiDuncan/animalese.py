@@ -22,3 +22,5 @@ def load():
 
     ENGLISH = english_dict
     JAPANESE = japanese_dict
+
+load()
