@@ -7,10 +7,11 @@ from pydub.playback import play
 from animalese.data.audio import english
 
 DEFAULT_LENGTH = 75
+PUNC_LENGTH = DEFAULT_LENGTH * 2
 
 
 class SpeechCharacter:
-    def __init__(self, c, sound, offset = DEFAULT_LENGTH):
+    def __init__(self, c, sound, offset = DEFAULT_LENGTH, **kwargs):
         self.c = c
         self.sound = sound
         self.offset = offset
@@ -27,9 +28,13 @@ class SpeechString:
     @property
     @lru_cache()
     def audio(self):
-        outsound = AudioSegment.empty()
+        outsound = AudioSegment.silent(duration = len(self))
+        currentchar = 1
         for sc in self.scs:
-            outsound += sc.sound[:DEFAULT_LENGTH]
+            outsound = outsound.overlay(
+                sc.sound.fade(start = DEFAULT_LENGTH, duration = 5, to_gain = -12.0), position = 75 * currentchar
+            )
+            currentchar += 1
         return outsound
 
     def play(self):
@@ -41,13 +46,18 @@ class SpeechString:
         self.audio.export(path, **kwargs)
 
     def __len__(self):
-        return len(self.audio)
+        return len(self.scs) * DEFAULT_LENGTH + DEFAULT_LENGTH
 
 
-ENGLISH = {
-    " ": SpeechCharacter(" ", AudioSegment.silent(duration = DEFAULT_LENGTH)),
-    "missingno": SpeechCharacter("missingno", AudioSegment.silent(duration = DEFAULT_LENGTH))
+SPECIAL_CHARACTERS = {
+    "missingno": {"duration": DEFAULT_LENGTH},
+    " ": {"duration": DEFAULT_LENGTH},
+    ".": {"duration": PUNC_LENGTH},
+    "!": {"duration": PUNC_LENGTH, "word_volume": 125},
+    "?": {"duration": PUNC_LENGTH, "word_pitch": 125}
 }
+
+ENGLISH = {}
 
 
 def getSC(c):
@@ -63,6 +73,9 @@ def load():
             filename = file[:-4].upper()
             wav_file = pkg_resources.open_binary(english, file)
             ENGLISH[filename] = SpeechCharacter(filename, AudioSegment.from_file(wav_file, format = "wav"))
+
+    for c, d in SPECIAL_CHARACTERS.items():
+        ENGLISH[c] = SpeechCharacter(c, AudioSegment.silent(duration = d["duration"]))
 
 
 load()
