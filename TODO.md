@@ -20,6 +20,7 @@
 - [ ] Adjust volume in the middle of input.
 - [ ] Adjust pitch in the middle of input.
   - [ ] Allow for note pitches to be used<sup>?</sup>
+- [ ] Add emote sounds during the speech.
 #### Image Markdown
 - [ ] Adjust the color of the text, even in the middle of input.
 - [ ] Adjust the size of the text, even in the middle of input.
