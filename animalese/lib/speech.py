@@ -7,7 +7,8 @@ from pydub.playback import play
 from animalese.data.audio import english
 
 DEFAULT_LENGTH = 75
-PUNC_LENGTH = DEFAULT_LENGTH * 2
+SPACE_LENGTH = DEFAULT_LENGTH * 0.5
+PUNC_LENGTH = DEFAULT_LENGTH * 1.5
 
 
 class SpeechCharacter:
@@ -51,7 +52,7 @@ class SpeechString:
 
 SPECIAL_CHARACTERS = {
     "missingno": {"duration": DEFAULT_LENGTH},
-    " ": {"duration": DEFAULT_LENGTH},
+    " ": {"duration": SPACE_LENGTH},
     ".": {"duration": PUNC_LENGTH},
     "!": {"duration": PUNC_LENGTH, "word_volume": 125},
     "?": {"duration": PUNC_LENGTH, "word_pitch": 125}
