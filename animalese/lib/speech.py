@@ -6,11 +6,11 @@ from pydub.playback import play
 
 from animalese.data.audio import english
 
-DEFAULT_OFFSET = 80
+DEFAULT_LENGTH = 750
 
 
 class SpeechCharacter:
-    def __init__(self, c, sound, offset = DEFAULT_OFFSET):
+    def __init__(self, c, sound, offset = DEFAULT_LENGTH):
         self.c = c
         self.sound = sound
         self.offset = offset
@@ -31,7 +31,7 @@ class SpeechString:
         outsound = AudioSegment.silent(duration = outlength)
         offset = 0
         for sc in self.scs:
-            outsound = outsound.overlay(sc.sound, position = offset)
+            outsound += sc.sound[:DEFAULT_LENGTH]
             offset += sc.offset
         return outsound
 
@@ -64,16 +64,6 @@ def getSC(c):
     c = c.upper()
     return ENGLISH.get(c, ENGLISH["missingno"])
 
-
-def calclength(text):
-    maxending = 0
-    offset = 0
-    for c in text:
-        sc = getSC(c)
-        ending = offset + len(sc)
-        maxending = max(ending, maxending)
-        offset += sc.offset
-    return maxending
 
 
 def load():
