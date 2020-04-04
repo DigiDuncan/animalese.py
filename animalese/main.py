@@ -1,6 +1,21 @@
+# import pydub
+
+from animalese import constants
+
+
+def start():
+    constants.load()
+
+
 def main():
-    pass
-    
+    start()
+
+    print("Input text:")
+    text = input("> ")
+
+    for c in text:
+        pass
+
 
 if __name__ == "__main__":
     main()
