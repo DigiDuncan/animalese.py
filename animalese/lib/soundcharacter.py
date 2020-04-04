@@ -13,13 +13,14 @@ class SoundCharacter:
 
 
 ENGLISH = {
-    " ": SoundCharacter(" ", AudioSegment.empty(), offset = 250)
+    " ": SoundCharacter(" ", AudioSegment.empty(), offset = 250),
+    "missingno": SoundCharacter("missingno", AudioSegment.empty())
 }
 
 
 def getSC(c):
     c = c.upper()
-    return ENGLISH.get(c, ENGLISH[" "])
+    return ENGLISH.get(c, ENGLISH["missingno"])
 
 
 def load():
