@@ -1,10 +1,5 @@
 # animalese.py TODO
 
-## What is Animalese (etc.)?
-**Animalese** is *Animal Crossing*'s "language" the characters speak in. What it actually is, however, is the individual letters of the words basically said aloud and ran into each other at various pitches and speeds.
-
-**Bebebese** is another language found in *Animal Crossing*, but instead of approximating phonemes by running letter sounds together, it is comprised of various beeps.
-
 ## Basic Operation
 - [ ] Takes text input and converts it to audio in Animalese.
   - [ ] Toggleable between either English or Japanese input.
