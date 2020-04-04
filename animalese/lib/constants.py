@@ -1,7 +1,7 @@
 import importlib.resources as pkg_resources
 
 from animalese.data.audio import english
-from animalese.lib.utils import AttrDict
+# from animalese.lib.utils import AttrDict
 
 
 ENGLISH = None
@@ -20,5 +20,5 @@ def load():
             filename = file[:-4].upper()
             english_dict[filename] = pkg_resources.read_binary(english, file)
 
-    ENGLISH = AttrDict(english_dict)
-    JAPANESE = AttrDict(japanese_dict)
+    ENGLISH = english_dict
+    JAPANESE = japanese_dict

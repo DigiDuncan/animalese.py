@@ -1,6 +1,7 @@
 # import pydub
 
-from animalese import constants
+from animalese.lib import constants
+from animalese.lib.constants import ENGLISH
 
 
 def start():
@@ -14,7 +15,8 @@ def main():
     text = input("> ")
 
     for c in text:
-        pass
+        letter = c.upper()
+        print(ENGLISH[letter])
 
 
 if __name__ == "__main__":
