@@ -11,6 +11,8 @@
     - [ ] English input outputs English Animalese.
     - [ ] Japanese input outputs Japanese Animalese.
   - [ ] Toggleable between Animalese and Bebebese.
+  - [ ] Pitch / speed options
+    - [ ] Presets
 
 ## Advanced Operation (Advanced Mode)
 ### Basic Markdown
