@@ -1,0 +1,2 @@
+colored==1.4.2
+digiformatter==0.5.2

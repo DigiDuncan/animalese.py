@@ -1,0 +1,12 @@
+# Compiled python
+*.pyc
+
+# Visual Studio
+.vs
+*.pyproj
+*.pyproj.user
+*.sln
+
+# Visual Studio Code
+.vscode
+*.code-workspace
