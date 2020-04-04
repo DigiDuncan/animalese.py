@@ -6,7 +6,7 @@ from pydub.playback import play
 
 from animalese.data.audio import english
 
-DEFAULT_LENGTH = 750
+DEFAULT_LENGTH = 75
 
 
 class SpeechCharacter:
@@ -27,12 +27,9 @@ class SpeechString:
     @property
     @lru_cache()
     def audio(self):
-        outlength = len(self)
-        outsound = AudioSegment.silent(duration = outlength)
-        offset = 0
+        outsound = AudioSegment.empty()
         for sc in self.scs:
             outsound += sc.sound[:DEFAULT_LENGTH]
-            offset += sc.offset
         return outsound
 
     def play(self):
@@ -43,27 +40,19 @@ class SpeechString:
             kwargs["format"] = "wav"
         self.audio.export(path, **kwargs)
 
-    @lru_cache()
     def __len__(self):
-        maxending = 0
-        offset = 0
-        for sc in self.scs:
-            ending = offset + len(sc)
-            maxending = max(ending, maxending)
-            offset += sc.offset
-        return maxending
+        return len(self.audio)
 
 
 ENGLISH = {
-    " ": SpeechCharacter(" ", AudioSegment.empty()),
-    "missingno": SpeechCharacter("missingno", AudioSegment.empty())
+    " ": SpeechCharacter(" ", AudioSegment.silent(duration = DEFAULT_LENGTH)),
+    "missingno": SpeechCharacter("missingno", AudioSegment.silent(duration = DEFAULT_LENGTH))
 }
 
 
 def getSC(c):
     c = c.upper()
     return ENGLISH.get(c, ENGLISH["missingno"])
-
 
 
 def load():
