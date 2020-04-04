@@ -6,6 +6,7 @@ def main():
     text = input("> ")
 
     SpeechString(text).play()
+    SpeechString(text).save("./out.wav")
 
     print("Done!")
 
